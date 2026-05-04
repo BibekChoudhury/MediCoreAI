@@ -1,0 +1,32 @@
+# Heart Health Module v2 - Dependencies
+
+# Core Framework
+fastapi==0.115.*
+uvicorn[standard]==0.34.*
+python-multipart==0.0.*
+
+# Database
+sqlalchemy==2.0.*
+
+# Authentication
+python-jose[cryptography]==3.3.*
+passlib[bcrypt]==1.7.*
+bcrypt==4.2.*
+
+# ML & Data Science
+pandas==2.2.*
+numpy==2.1.*
+scikit-learn==1.6.*
+joblib==1.4.*
+
+# Audio Processing
+librosa==0.10.*     
+soundfile==0.12.*   
+
+# Testing
+pytest==8.3.*
+httpx==0.28.*
+
+# Utilities
+pydantic==2.10.*
+python-dotenv==1.0.*

@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Cardia — AI Health Command Center</title>
+    <meta name="description" content="Futuristic AI-powered heart health monitoring command center with real-time vitals, predictive analytics, and conversational AI assistant">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="css/styles.css?v=3">
+</head>
+<body>
+    <!-- ── Cosmic Background ─────────────────── -->
+    <div class="bg-effects">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- ── App Container ─────────────────────── -->
+    <div class="app">
+        <!-- ── HUD Header ────────────────────── -->
+        <header class="header">
+            <div class="header-left">
+                <div class="logo">
+                    <span class="logo-icon">🫀</span>
+                    <span class="logo-text">Cardia</span>
+                    <span class="badge">v2.0</span>
+                </div>
+                <div class="live-clock" id="liveClock">--:--:--</div>
+            </div>
+            <div class="header-right">
+                <button class="jarvis-toggle" id="jarvisToggle" title="Toggle Cardia Chat">
+                    <span class="pulse-dot"></span>
+                    <span>Cardia</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- ── Navigation Bar (INLINE STYLES FOR GUARANTEED VISIBILITY) ── -->
+        <nav class="nav-bar" id="mainNav" style="display:flex !important; justify-content:center; gap:6px; padding:10px 24px; background:rgba(5,12,28,0.95); border-bottom:1px solid rgba(0,212,255,0.12); position:sticky; top:56px; z-index:99;">
+            <button class="nav-btn active" data-tab="dashboard" id="nav-dashboard" style="padding:8px 16px; border:none; background:rgba(0,212,255,0.12); color:#e0e8ff; font-size:0.75rem; font-weight:600; letter-spacing:1px; text-transform:uppercase; border-radius:8px; cursor:pointer;">
+                📊 Dashboard
+            </button>
+            <button class="nav-btn" data-tab="predict" id="nav-predict" style="padding:8px 16px; border:none; background:transparent; color:#7a8ba8; font-size:0.75rem; font-weight:500; letter-spacing:1px; text-transform:uppercase; border-radius:8px; cursor:pointer;">
+                🎯 Risk Scan
+            </button>
+            <button class="nav-btn" data-tab="reports" id="nav-reports" style="padding:8px 16px; border:none; background:transparent; color:#7a8ba8; font-size:0.75rem; font-weight:500; letter-spacing:1px; text-transform:uppercase; border-radius:8px; cursor:pointer;">
+                📋 Reports
+            </button>
+            <button class="nav-btn" data-tab="devices" id="nav-devices" style="padding:8px 16px; border:none; background:transparent; color:#7a8ba8; font-size:0.75rem; font-weight:500; letter-spacing:1px; text-transform:uppercase; border-radius:8px; cursor:pointer;">
+                📱 Devices
+            </button>
+        </nav>
+
+        <!-- ── Main Content ───────────────────── -->
+        <main class="main">
+            <!-- ── Dashboard Tab ──────────────── -->
+            <section class="tab-content active" id="tab-dashboard">
+                <div class="section-title">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <h1>Command Center</h1>
+                            <p>Real-time health monitoring powered by DeepAgent AI</p>
+                        </div>
+                        <div style="display: flex; gap: 15px; align-items: center;">
+                            <label for="timePeriodFilter" style="font-weight: 600; color: #00d4ff;">Data Period:</label>
+                            <select id="timePeriodFilter" style="padding: 8px 12px; border-radius: 8px; border: 1px solid #00d4ff; background: rgba(0, 212, 255, 0.1); color: #00d4ff; font-weight: 600; cursor: pointer; font-size: 14px;">
+                                <option value="today">📅 Today Only</option>
+                                <option value="7days">📊 Last 7 Days</option>
+                                <option value="30days">📈 Last 30 Days</option>
+                                <option value="all">🕐 All Time</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Central Heart with Orbital Rings -->
+                <div class="heart-core">
+                    <div class="orbit-ring orbit-ring-1"></div>
+                    <div class="orbit-ring orbit-ring-2"></div>
+                    <div class="orbit-ring orbit-ring-3"></div>
+                    <div class="heart-display">
+                        <span class="heart-icon">🫀</span>
+                        <span class="heart-bpm" id="heartBpmDisplay">-- BPM</span>
+                    </div>
+                </div>
+
+                <!-- ECG Line Animation -->
+                <div class="ecg-line">
+                    <svg viewBox="0 0 1200 60" preserveAspectRatio="none">
+                        <path d="M0,30 L50,30 L60,30 L70,10 L80,50 L90,25 L100,35 L110,30 L200,30 L210,30 L220,10 L230,50 L240,25 L250,35 L260,30 L350,30 L360,30 L370,10 L380,50 L390,25 L400,35 L410,30 L500,30 L510,30 L520,10 L530,50 L540,25 L550,35 L560,30 L600,30 L650,30 L660,30 L670,10 L680,50 L690,25 L700,35 L710,30 L800,30 L810,30 L820,10 L830,50 L840,25 L850,35 L860,30 L950,30 L960,30 L970,10 L980,50 L990,25 L1000,35 L1010,30 L1100,30 L1110,30 L1120,10 L1130,50 L1140,25 L1150,35 L1160,30 L1200,30" />
+                    </svg>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card" id="hrCard">
+                        <div class="stat-header">
+                            <span class="stat-icon pulse-animation">❤️</span>
+                            <span class="stat-label">Heart Rate</span>
+                        </div>
+                        <div class="stat-value" id="hrValue">--</div>
+                        <div class="stat-unit">bpm</div>
+                        <div class="stat-status" id="hrStatus">Waiting for data...</div>
+                    </div>
+                    <div class="stat-card" id="spo2Card">
+                        <div class="stat-header">
+                            <span class="stat-icon">🫁</span>
+                            <span class="stat-label">SpO2</span>
+                        </div>
+                        <div class="stat-value" id="spo2Value">--</div>
+                        <div class="stat-unit">percent</div>
+                        <div class="stat-status" id="spo2Status">Waiting for data...</div>
+                    </div>
+                    <div class="stat-card" id="hrvCard">
+                        <div class="stat-header">
+                            <span class="stat-icon">📈</span>
+                            <span class="stat-label">HRV</span>
+                        </div>
+                        <div class="stat-value" id="hrvValue">--</div>
+                        <div class="stat-unit">millisec</div>
+                        <div class="stat-status" id="hrvStatus">Waiting for data...</div>
+                    </div>
+                    <div class="stat-card" id="stepsCard">
+                        <div class="stat-header">
+                            <span class="stat-icon">👣</span>
+                            <span class="stat-label">Steps</span>
+                        </div>
+                        <div class="stat-value" id="stepsValue">--</div>
+                        <div class="stat-unit">today</div>
+                        <div class="stat-status" id="stepsStatus">Waiting for data...</div>
+                    </div>
+                </div>
+
+                <!-- Charts -->
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h3>Heart Rate — Live</h3>
+                        <canvas id="hrChart"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h3>SpO2 — Live</h3>
+                        <canvas id="spo2Chart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Monitoring Controls -->
+                <div class="control-row">
+                    <button class="btn btn-primary" id="startMonitoring">▶ Start Monitoring</button>
+                    <button class="btn btn-secondary" id="stopMonitoring" disabled>⏹ Stop</button>
+                    <button class="btn btn-outline" id="generateDemo">🧪 Generate Demo Data</button>
+                </div>
+            </section>
+
+            <!-- ── Prediction Tab ─────────────── -->
+            <section class="tab-content" id="tab-predict">
+                <div class="section-title">
+                    <h1>Risk Scan</h1>
+                    <p>AI-powered cardiac risk assessment with interpretable factors</p>
+                </div>
+
+                <div class="predict-layout">
+                    <div class="form-card">
+                        <h3 style="font-family: var(--font-hud); font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 16px;">Patient Data</h3>
+                        <form id="predictionForm">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="pred-age">Age</label>
+                                    <input type="number" id="pred-age" value="55" min="1" max="150" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pred-sex">Sex</label>
+                                    <select id="pred-sex">
+                                        <option value="1">Male</option>
+                                        <option value="0">Female</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pred-cp">Chest Pain Type</label>
+                                    <select id="pred-cp">
+                                        <option value="0">Typical Angina</option>
+                                        <option value="1">Atypical Angina</option>
+                                        <option value="2" selected>Non-Anginal Pain</option>
+                                        <option value="3">Asymptomatic</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pred-trestbps">Resting BP (mmHg)</label>
+                                    <input type="number" id="pred-trestbps" value="130" min="50" max="300">
+                                </div>
+                                <div class="form-group">
+                                    <label for="pred-chol">Cholesterol (mg/dl)</label>
+                                    <input type="number" id="pred-chol" value="250" min="50" max="600">
+                                </div>
+                                <div class="form-group">
+                                    <label for="pred-fbs">Fasting Blood Sugar > 120</label>
+                                    <select id="pred-fbs">
+                                        <option value="0" selected>No</option>
+                                        <option value="1">Yes</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pred-restecg">Resting ECG</label>
+                                    <select id="pred-restecg">
+                                        <option value="0">Normal</option>
+                                        <option value="1" selected>ST-T Abnormality</option>
+                                        <option value="2">LVH</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pred-thalach">Max Heart Rate</label>
+                                    <input type="number" id="pred-thalach" value="150" min="50" max="250">
+                                </div>
+                                <div class="form-group">
+                                    <label for="pred-exang">Exercise Angina</label>
+                                    <select id="pred-exang">
+                                        <option value="0" selected>No</option>
+                                        <option value="1">Yes</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pred-oldpeak">ST Depression</label>
+                                    <input type="number" id="pred-oldpeak" value="1.2" step="0.1" min="0" max="10">
+                                </div>
+                                <div class="form-group">
+                                    <label for="pred-slope">ST Slope</label>
+                                    <select id="pred-slope">
+                                        <option value="0">Upsloping</option>
+                                        <option value="1">Flat</option>
+                                        <option value="2" selected>Downsloping</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pred-ca">Vessels Colored (0-4)</label>
+                                    <input type="number" id="pred-ca" value="0" min="0" max="4">
+                                </div>
+                                <div class="form-group">
+                                    <label for="pred-thal">Thalassemia</label>
+                                    <select id="pred-thal">
+                                        <option value="0">Normal</option>
+                                        <option value="1">Fixed Defect</option>
+                                        <option value="2" selected>Normal</option>
+                                        <option value="3">Reversible Defect</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary full-width">🎯 Run Risk Scan</button>
+                        </form>
+                    </div>
+
+                    <div class="result-card" id="predictionResult" style="display:none">
+                        <h3 style="font-family: var(--font-hud); font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 16px;">Scan Result</h3>
+                        <div class="risk-gauge" id="riskGauge">
+                            <div class="risk-score" id="riskScore">--</div>
+                            <div class="risk-label" id="riskLabel">--</div>
+                        </div>
+                        <div class="risk-summary" id="riskSummary"></div>
+                        <div class="risk-factors" id="riskFactors"></div>
+                        <div class="risk-tips" id="riskTips"></div>
+                        <div class="jarvis-card" id="predJarvis"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ── Reports Tab ────────────────── -->
+            <section class="tab-content" id="tab-reports">
+                <div class="section-title">
+                    <h1>Report Analysis</h1>
+                    <p>Upload ECG, angiography, or heart sound files for AI analysis</p>
+                </div>
+
+                <div class="reports-grid">
+                    <!-- ECG Upload -->
+                    <div class="upload-card">
+                        <div class="upload-icon">📋</div>
+                        <h3>ECG Report Analysis</h3>
+                        <p>Upload an ECG image (JPEG/PNG), PDF, or paste report text</p>
+                        <div class="form-group">
+                            <textarea id="ecgText" placeholder="Paste ECG report text here..." rows="4"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input type="file" id="ecgFile" accept=".jpg,.jpeg,.png,.pdf,.txt">
+                        </div>
+                        <button class="btn btn-primary" id="analyzeEcg">🔍 Analyze ECG</button>
+                        <div class="analysis-result" id="ecgResult"></div>
+                    </div>
+
+                    <!-- Angiography Report -->
+                    <div class="upload-card">
+                        <div class="upload-icon">🩺</div>
+                        <h3>Angiography Report</h3>
+                        <p>Upload angiography procedure report (PDF) for analysis</p>
+                        <div class="form-group">
+                            <input type="file" id="angioFile" accept=".pdf">
+                        </div>
+                        <button class="btn btn-primary" id="analyzeAngio">🔍 Analyze Report</button>
+                        <div class="analysis-result" id="angioResult"></div>
+                    </div>
+
+                    <!-- Heart Sound -->
+                    <div class="upload-card">
+                        <div class="upload-icon">🎧</div>
+                        <h3>Heart Sound Analysis</h3>
+                        <p>Upload a heart sound recording (WAV/MP3, 10-60 seconds)</p>
+                        <div class="form-group">
+                            <input type="file" id="soundFile" accept=".wav,.mp3,.ogg,.m4a">
+                        </div>
+                        <button class="btn btn-primary" id="analyzeSound">🔍 Analyze Sound</button>
+                        <div class="analysis-result" id="soundResult"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ── Devices Tab ────────────────── -->
+            <section class="tab-content" id="tab-devices">
+                <div class="section-title">
+                    <h1>Connected Devices</h1>
+                    <p>Manage your health data sources and integrations</p>
+                </div>
+
+                <div class="devices-grid">
+                    <div class="device-card" style="opacity: 0.6;">
+                        <div class="device-icon">🔥</div>
+                        <h3>Firebolt Watch</h3>
+                        <p>Direct smartwatch integration</p>
+                        <button class="btn btn-outline" disabled style="cursor:not-allowed;">🔒 Coming Soon</button>
+                        <div class="device-status" id="status-firebolt">Integration pending</div>
+                    </div>
+                    <div class="device-card">
+                        <div class="device-icon">🟢</div>
+                        <h3>Google Fit</h3>
+                        <p>Android phones and Wear OS watches</p>
+                        <button class="btn btn-outline" id="connectGoogleFit" onclick="connectGoogleFit()">Connect with OAuth</button>
+                        <div class="device-status" id="status-google_fit">Not connected</div>
+                    </div>
+                    <div class="device-card" style="opacity: 0.6;">
+                        <div class="device-icon">💙</div>
+                        <h3>Fitbit</h3>
+                        <p>Intraday HR, HRV, SpO2, sleep tracking</p>
+                        <button class="btn btn-outline" disabled style="cursor:not-allowed;">🔒 Coming Soon</button>
+                        <div class="device-status" id="status-fitbit">Integration pending</div>
+                    </div>
+                    <div class="device-card manual">
+                        <div class="device-icon">✍️</div>
+                        <h3>Manual Entry</h3>
+                        <p>Log vitals manually</p>
+                        <div class="manual-form">
+                            <div class="form-row">
+                                <input type="number" id="manual-hr" placeholder="Heart Rate (bpm)">
+                                <input type="number" id="manual-bp-sys" placeholder="BP Systolic">
+                            </div>
+                            <div class="form-row">
+                                <input type="number" id="manual-bp-dia" placeholder="BP Diastolic">
+                                <input type="number" id="manual-spo2" placeholder="SpO2 (%)">
+                            </div>
+                            <button class="btn btn-primary" onclick="submitManualEntry()">📝 Log Entry</button>
+                        </div>
+                        <div class="device-status" id="status-manual">Ready</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- ── System Status Bar ──────────────── -->
+        <div class="system-status">
+            <div class="status-item">
+                <span class="status-dot" id="systemDot"></span>
+                <span>System Online</span>
+            </div>
+            <div class="status-item">
+                <span class="status-dot" id="monitorDot" class="offline"></span>
+                <span id="monitorStatus">Monitor Idle</span>
+            </div>
+            <div class="status-item">
+                <span class="status-dot syncing" id="syncDot" style="display:none"></span>
+                <span id="syncStatus"></span>
+            </div>
+            <div class="status-item">
+                <span id="dateDisplay">--</span>
+            </div>
+        </div>
+
+        <!-- ── Cardia Chat Panel ──────────────── -->
+        <aside class="jarvis-panel" id="jarvisPanel">
+            <div class="jarvis-header">
+                <div class="jarvis-title">
+                    <span class="jarvis-icon">🤖</span>
+                    <span>Cardia</span>
+                    <span class="jarvis-badge">AI Buddy</span>
+                </div>
+                <button class="jarvis-close" id="jarvisClose">✕</button>
+            </div>
+            <div class="jarvis-messages" id="jarvisMessages">
+                <div class="message jarvis-msg">
+                    <div class="msg-avatar">🤖</div>
+                    <div class="msg-content">
+                        <p>Hey there! 👋 I'm Cardia, your personal health buddy. I'm here to help you understand your heart data, break down reports, and keep you in the loop about your health.</p>
+                        <p>What's on your mind? 😊</p>
+                        <div class="msg-suggestions">
+                            <button class="suggestion-btn" onclick="sendSuggestion('How is my heart today?')">💓 How's my heart?</button>
+                            <button class="suggestion-btn" onclick="sendSuggestion('Help')">🤝 What can you do?</button>
+                            <button class="suggestion-btn" onclick="sendSuggestion('Connect a device')">📱 Connect device</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="voice-controls">
+                <label class="voice-toggle">
+                    <input type="checkbox" id="voiceToggle" checked>
+                    <span>Enable Voice Responses</span>
+                </label>
+            </div>
+            <div class="jarvis-input">
+                <button class="voice-btn" id="voiceBtn" title="Hold to speak">
+                    <span class="mic-icon">🎙️</span>
+                </button>
+                <input type="text" id="jarvisInput" placeholder="Ask me anything about your heart..." autocomplete="off">
+                <button class="send-btn" id="jarvisSend">→</button>
+            </div>
+        </aside>
+
+        <!-- Hidden Audio Element for Voice Agent -->
+        <audio id="agentVoiceAudio" style="display: none;"></audio>
+    </div>
+
+    <script src="js/app.js?v=2.1"></script>
+</body>
+</html>
